@@ -1,0 +1,31 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - wordpress-network
+  wordpress:
+    depends_on:
+      - db
+    build: ./wordpress
+    volumes:
+      - wordpress_files:/var/www/html
+    networks:
+      - wordpress-network
+  db:
+    build: ./mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wordpress-network
+volumes:
+  wordpress_files:
+  db_data:
+networks:
+  wordpress-network:
+    driver: bridge

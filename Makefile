@@ -6,7 +6,7 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/02/19 14:33:15 by ageels        #+#    #+#                  #
-#    Updated: 2024/02/19 15:26:42 by ageels        ########   odam.nl          #
+#    Updated: 2024/02/19 15:29:44 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ include ./src/.env
 
 all : up
 
-up:
+up :
 	docker-compose -f $(SRC) up -d 
 
-down:
+down :
 	docker-compose -f $(SRC) down
 
 clean :
-    docker-compose -f $(SRC) down --volumes
+	docker-compose -f $(SRC) down --volumes
 
 
-.PHONY: all up down
+.PHONY: all up down clean

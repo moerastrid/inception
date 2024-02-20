@@ -12,37 +12,37 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    # volumes:
+    #   - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       # - wordpress-volume:/var/www/html
     networks:
       - inception-network
-    depends_on:
-      - wordpress
+    # depends_on:
+    #   - wordpress
 
-  wordpress:
-    #either this or the image below?
-    depends_on:
-      - db
-    build: ./wordpress
-    # image: wordpress:php7.4-fpm-alpine
-    volumes:
-      - wordpress_volume:/var/www/html
-    networks:
-      - inception-network
+#   wordpress:
+#     #either this or the image below?
+#     depends_on:
+#       - db
+#     build: ./wordpress
+#     # image: wordpress:php7.4-fpm-alpine
+#     volumes:
+#       - wordpress_volume:/var/www/html
+#     networks:
+#       - inception-network
 
-  db:
-    build: ./mariadb
-    volumes:
-      - db_volume:/var/lib/mysql
-    networks:
-      - inception-network
+#   db:
+#     build: ./mariadb
+#     volumes:
+#       - db_volume:/var/lib/mysql
+#     networks:
+#       - inception-network
 
-volumes:
-  wordpress_volume:
-    name:
-      wordpress-volume
-  db_volume:
-    name:
-      db-volume
+# volumes:
+#   wordpress_volume:
+#     name:
+#       wordpress-volume
+#   db_volume:
+#     name:
+#       db-volume
 

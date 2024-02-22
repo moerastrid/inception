@@ -1,11 +1,5 @@
 version: '3'
 
-networks:
-  inception-network:
-    name :
-      inception-network
-    driver: bridge
-
 services:
   nginx:
     build: ./nginx
@@ -46,3 +40,8 @@ services:
 #     name:
 #       db-volume
 
+networks:
+  inception-network:
+    name :
+      inception-network
+    driver: bridge

@@ -1,0 +1,17 @@
+#	Handige dingen	#
+
+
+docker ps (lijst bestaande containers)
+docker image -l (lijst locale images)
+
+Bestaat image al?
+docker rmi -f {IMAGE_NAME}
+
+
+linkjes
+	Alpine linux + nginx
+		https://wiki.alpinelinux.org/wiki/Nginx
+	Nginx
+		http://nginx.org/en/docs/
+	
+

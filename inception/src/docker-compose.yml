@@ -1,0 +1,29 @@
+#TODO : remove restart: on-failure[NUMBER] -> should be ALWAYS
+
+version: '3.8'
+
+volumes:
+  data:
+
+services:
+  db:
+    build: ./mariadb
+    # restart: on-failure
+    volumes:
+      - data:/var/lib/mysql
+    networks:
+      - inception-network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8000:80"
+    networks:
+      - inception-network
+    # restart: on-failure
+
+networks:
+  inception-network:
+    name :
+      inception-network
+    driver: bridge

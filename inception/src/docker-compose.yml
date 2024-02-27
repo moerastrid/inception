@@ -3,24 +3,40 @@
 version: '3.8'
 
 volumes:
-  data:
+  db:
+  wp:
 
 services:
   db:
     build: ./mariadb
+    env_file:
+      ./env_file.env
     # restart: on-failure
     volumes:
-      - data:/var/lib/mysql
+      - db:/home/ageels/data
+    networks:
+      - inception-network
+
+  wordpress:
+    depends_on:
+      - db
+    build: ./wordpress
+    volumes:
+      - wp:/home/ageels/data
     networks:
       - inception-network
 
   nginx:
+    depends_on:
+      - wordpress
     build: ./nginx
     ports:
       - "8000:80"
+      # - "433:433"
     networks:
       - inception-network
     # restart: on-failure
+
 
 networks:
   inception-network:

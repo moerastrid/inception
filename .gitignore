@@ -1,5 +1,5 @@
-./inception/.env
-./inception/src/.env
-./prev_inception/.env
-./prev_inception/src/.env
+./inception/*.env
+./inception/src/*.env
+./prev_inception/*.env
+./prev_inception/src/*.env
 *.env

@@ -13,5 +13,7 @@ linkjes
 		https://wiki.alpinelinux.org/wiki/Nginx
 	Nginx
 		http://nginx.org/en/docs/
+	Nginx TLS1.2 & TLS1.3 only
+		https://www.cyberciti.biz/faq/configure-nginx-to-use-only-tls-1-2-and-1-3/
 	
 

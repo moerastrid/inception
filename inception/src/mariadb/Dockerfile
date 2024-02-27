@@ -1,1 +1,3 @@
-FROM mariadb:latest
+FROM mariadb:10.5
+
+RUN -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD

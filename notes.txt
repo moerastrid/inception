@@ -1,11 +1,12 @@
 #	Handige dingen	#
 
 
-docker ps (lijst bestaande containers)
+docker ps -l (lijst bestaande containers)
 docker image -l (lijst locale images)
 
-Bestaat image al?
+Bestaat image nog?
 docker rmi -f {IMAGE_NAME}
+Bestaat container nog?
 
 
 linkjes

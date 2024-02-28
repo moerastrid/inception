@@ -1,0 +1,42 @@
+#TO DO : replace astrid by ageels when on school computer
+
+version: '3.9'
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  db:
+  wpphp:
+
+services:
+  db:
+    build:
+      ./mariadb
+    env_file:
+      ./variables.env
+    volumes:
+      - db:/home/astrid/data
+    networks:
+      - inception
+
+  wpphp:
+    depends_on:
+      - db
+    build:
+      ./wpphp
+    networks:
+      - inception
+
+  nginx:
+    depends_on:
+      - db
+      - wpphp
+    build:
+      ./nginx
+    ports:
+      - "8000:80"
+      - "433:433"
+    networks:
+      - inception

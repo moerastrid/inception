@@ -1,5 +1,4 @@
 #TO DO : replace astrid by ageels when on school computer
-
 version: '3.9'
 
 networks:
@@ -7,27 +6,52 @@ networks:
     driver: bridge
 
 volumes:
-  db:
-  wpphp:
+  database:
+    name: database_volume
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/database
+      o: bind
+  webfiles:
+    name: webfiles_volume
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/webfiles
+      o: bind
 
 services:
   db:
-    build:
-      ./mariadb
     env_file:
-      ./variables.env
-    volumes:
-      - db:/home/astrid/data
+      .env
+    build:
+      context: ./mariadb/
+      args:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes: 
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
     networks:
       - inception
+    restart:  on-failure
 
   wpphp:
     depends_on:
       - db
     build:
       ./wpphp
+    volumes:
+      - webfiles:/var/www/html
+    ports:
+      - 9000:9000
     networks:
       - inception
+    restart:  on-failure
 
   nginx:
     depends_on:
@@ -35,8 +59,11 @@ services:
       - wpphp
     build:
       ./nginx
+    volumes:
+      - webfiles:/var/www/html
     ports:
-      - "8000:80"
-      - "433:433"
+      - 8000:80
+      - 433:433
     networks:
       - inception
+    restart:  on-failure

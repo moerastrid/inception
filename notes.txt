@@ -10,11 +10,21 @@ Bestaat container nog?
 
 
 linkjes
-	Alpine linux + nginx
-		https://wiki.alpinelinux.org/wiki/Nginx
-	Nginx
-		http://nginx.org/en/docs/
-	Nginx TLS1.2 & TLS1.3 only
-		https://www.cyberciti.biz/faq/configure-nginx-to-use-only-tls-1-2-and-1-3/
+	NGINX
+		Alpine linux + nginx
+			https://wiki.alpinelinux.org/wiki/Nginx
+		Nginx
+			http://nginx.org/en/docs/
+		Nginx TLS1.2 & TLS1.3 only
+			https://www.cyberciti.biz/faq/configure-nginx-to-use-only-tls-1-2-and-1-3/
 	
+	DOCKER 
+		volumes
+			https://phoenixnap.com/kb/nfs-docker-volumes
+			https://kinsta.com/blog/docker-compose-volumes/
 
+	MARIADB
+		alpine linux + mariadb
+			https://wiki.alpinelinux.org/wiki/MySQL
+		MySQL
+			https://dev.mysql.com/doc/refman/8.0/en/

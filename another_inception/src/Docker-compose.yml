@@ -3,6 +3,7 @@ version: '3.9'
 
 networks:
   inception:
+    name: inception
     driver: bridge
 
 volumes:
@@ -23,47 +24,52 @@ volumes:
 
 services:
   db:
-    env_file:
-      .env
-    build:
-      context: ./mariadb/
-      args:
-        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
+    container_name: db
+    env_file: .env
+    build: ./mariadb/
     volumes: 
-      - database:/var/lib/mysql
-    ports:
-      - 3306:3306
+      - database:/data/database
+    configs:
+      - source: mariadb_config
+        target: etc/my.cnf
     networks:
       - inception
-    restart:  on-failure
+    restart: on-failure
 
   wpphp:
+    container_name: wpphp
+    # env_file: .env
     depends_on:
       - db
-    build:
-      ./wpphp
+    build: ./wpphp
     volumes:
       - webfiles:/var/www/html
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
     networks:
       - inception
     restart:  on-failure
+    # stdin_open: true    # Keep STDIN open even if not attached
+    # tty: true           # Allocate a pseudo-TTY
 
   nginx:
+    container_name: nginx
     depends_on:
       - db
       - wpphp
-    build:
-      ./nginx
+    build: ./nginx
     volumes:
       - webfiles:/var/www/html
     ports:
       - 8000:80
-      - 433:433
+      # - 433:433
     networks:
       - inception
     restart:  on-failure
+    # stdin_open: true    # Keep STDIN open even if not attached
+    # tty: true           # Allocate a pseudo-TTY
+
+
+configs:
+  mariadb_config:
+    file: ./mariadb/mariadb.conf

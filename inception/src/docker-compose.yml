@@ -37,7 +37,6 @@ services:
       - inception-network
     # restart: on-failure
 
-
 networks:
   inception-network:
     name :

@@ -19,7 +19,7 @@ RUN chown -R mysql:mysql /data/database
 # RUN mariadb -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
 # # RUN mariadb -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
 
-# EXPOSE 3306
+EXPOSE 3306
 
 
 COPY ./commands.sh /

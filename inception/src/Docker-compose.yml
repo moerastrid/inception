@@ -23,46 +23,48 @@ volumes:
       o: bind
 
 services:
-  db:
-    container_name: db
-    env_file: .env
-    build: ./mariadb/
-    volumes: 
-      - database:/data/database
-    configs:
-      - source: mariadb_config
-        target: etc/my.cnf
-    networks:
-      - inception
-    restart: on-failure
+  # db:
+  #   container_name: db
+  #   env_file: .env
+  #   build: ./mariadb/
+  #   volumes: 
+  #     - database:/data/database
+  #   configs:
+  #     - source: mariadb_config
+  #       target: etc/my.cnf
+  #   networks:
+  #     - inception
+  #   restart: on-failure
 
-  wpphp:
-    container_name: wpphp
-    # env_file: .env
-    depends_on:
-      - db
-    build: ./wpphp
-    volumes:
-      - webfiles:/var/www/html
-    # ports:
-    #   - 9000:9000
-    networks:
-      - inception
-    restart:  on-failure
-    # stdin_open: true    # Keep STDIN open even if not attached
-    # tty: true           # Allocate a pseudo-TTY
+  # wpphp:
+  #   container_name: wpphp
+  #   # env_file: .env
+  #   depends_on:
+  #     - db
+  #   build: ./wpphp
+  #   volumes:
+  #     - webfiles:/var/www/html
+  #   # ports:
+  #   #   - 9000:9000
+  #   networks:
+  #     - inception
+  #   restart:  on-failure
+  #   # stdin_open: true    # Keep STDIN open even if not attached
+  #   # tty: true           # Allocate a pseudo-TTY
 
   nginx:
     container_name: nginx
-    depends_on:
-      - db
-      - wpphp
+    # depends_on:
+      # - db
+      # - wpphp
     build: ./nginx
     volumes:
       - webfiles:/var/www/html
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
     ports:
-      - 8000:80
-      # - 433:433
+      - 4433:433
     networks:
       - inception
     restart:  on-failure
@@ -73,3 +75,5 @@ services:
 configs:
   mariadb_config:
     file: ./mariadb/mariadb.conf
+  nginx_config:
+    file: ./nginx/nginx.conf

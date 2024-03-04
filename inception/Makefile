@@ -6,7 +6,7 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/02/28 11:58:00 by ageels        #+#    #+#                  #
-#    Updated: 2024/02/29 18:54:45 by ageels        ########   odam.nl          #
+#    Updated: 2024/03/04 13:09:02 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ obj_folder:
 	mkdir -pv $(DATA_DIR)/database
 	mkdir -pv $(DATA_DIR)/webfiles
 
-up :
-	docker-compose -f $(SRC) -p $(NAME) up --build
+up : obj_folder
+	docker-compose -f $(SRC) -p $(NAME) up -d --build
 
 down :
 	docker-compose -f $(SRC) -p $(NAME) down

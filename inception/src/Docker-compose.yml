@@ -37,12 +37,15 @@ services:
 
   wpphp:
     container_name: wpphp
-    # env_file: .env
+    env_file: .env
     depends_on:
       - db
     build: ./wpphp
     volumes:
-      - webfiles:/var/www/html
+      - webfiles:/data/webfiles/
+    configs:
+      - source: wpphp_config
+        target: /data/webfiles/wp-config.php
     # ports:
     #   - 9000:9000
     networks:
@@ -53,9 +56,9 @@ services:
 
   nginx:
     container_name: nginx
-    # depends_on:
-      # - db
-      # - wpphp
+    depends_on:
+      - db
+      - wpphp
     build: ./nginx
     volumes:
       - webfiles:/data/webfiles
@@ -76,3 +79,5 @@ configs:
     file: ./mariadb/mariadb.conf
   nginx_config:
     file: ./nginx/nginx.conf
+  wpphp_config:
+    file: ./wpphp/wp-config.php

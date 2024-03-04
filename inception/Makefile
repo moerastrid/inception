@@ -6,7 +6,7 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/02/28 11:58:00 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/04 15:47:24 by ageels        ########   odam.nl          #
+#    Updated: 2024/03/04 18:18:30 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ down :
 
 clean :
 	docker-compose -f $(SRC) -p $(NAME) down --remove-orphans --volumes --rmi all
-	docker volume prune -f
+	docker volume prune -fDDOMAIN_NAME
 	docker container prune -f
 	docker image prune -f
 # rmdir -pv $(DATA_DIR)/database

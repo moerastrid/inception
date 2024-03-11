@@ -63,9 +63,7 @@ services:
   nginx:
     container_name: nginx
     depends_on:
-      - db:
-        condition: service_healthy
-      - wpphp:
+      wpphp:
         condition: service_started
     build: ./nginx
     volumes:

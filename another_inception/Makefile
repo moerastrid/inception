@@ -6,7 +6,7 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/02/28 11:58:00 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/11 15:15:58 by ageels        ########   odam.nl          #
+#    Updated: 2024/03/11 17:08:34 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,6 @@ clean :
 	docker volume prune -f
 	docker container prune -f
 	docker image prune -f
-# rmdir -pv $(DATA_DIR)/database
-# rmdir -pv $(DATA_DIR)/webfiles
-# rmdir -pv $(DATA_DIR)
 	rm -fr $(DATA_DIR)
 
 re : down all

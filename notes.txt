@@ -8,6 +8,9 @@ Bestaat image nog?
 docker rmi -f {IMAGE_NAME}
 Bestaat container nog?
 
+Probleem, no permission to stop container?
+sudo aa-remove-unknown
+
 
 linkjes
 	NGINX

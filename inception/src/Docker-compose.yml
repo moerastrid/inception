@@ -34,12 +34,18 @@ services:
     networks:
       - inception
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h" ,"localhost"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
 
   wpphp:
     container_name: wpphp
     env_file: .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     build: ./wpphp
     volumes:
       - webfiles:/data/webfiles/
@@ -57,8 +63,10 @@ services:
   nginx:
     container_name: nginx
     depends_on:
-      - db
-      - wpphp
+      - db:
+        condition: service_healthy
+      - wpphp:
+        condition: service_started
     build: ./nginx
     volumes:
       - webfiles:/data/webfiles

@@ -28,9 +28,9 @@ services:
     build: ./MariaDB/
     volumes: 
       - database:/data/database
-    configs:
-      - source: mariadb_config
-        target: etc/my.cnf
+    # configs:
+    #   - source: mariadb_config
+    #     target: etc/my.cnf
     networks:
       - inception
     restart: on-failure
@@ -39,6 +39,7 @@ services:
       interval: 5s
       timeout: 1s
       retries: 5
+      start_period: 30s
 
   wpphp:
     container_name: wpphp
@@ -49,9 +50,9 @@ services:
     build: ./WP_PHP
     volumes:
       - webfiles:/data/webfiles/
-    configs:
-      - source: wpphp_config
-        target: /data/webfiles/wp-config.php
+    # configs:
+    #   - source: wpphp_config
+    #     target: /data/webfiles/wp-config.php
     networks:
       - inception
     restart:  on-failure
@@ -64,19 +65,19 @@ services:
     build: ./NginX
     volumes:
       - webfiles:/data/webfiles
-    configs:
-      - source: nginx_config
-        target: /etc/nginx/nginx.conf
+    # configs:
+    #   - source: nginx_config
+    #     target: /etc/nginx/nginx.conf
     ports:
       - 433:433
     networks:
       - inception
     restart:  on-failure
 
-configs:
-  mariadb_config:
-    file: ./MariaDB/mariadb.conf
-  nginx_config:
-    file: ./NginX/nginx.conf
-  wpphp_config:
-    file: ./WP_PHP/wp-config.php
+# configs:
+#   mariadb_config:
+#     file: ./MariaDB/mariadb.conf
+#   nginx_config:
+#     file: ./NginX/nginx.conf
+#   wpphp_config:
+#     file: ./WP_PHP/wp-config.php

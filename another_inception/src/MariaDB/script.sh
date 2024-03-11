@@ -1,5 +1,9 @@
 #!/bin/sh
 
+systemctl start mysqld
+
+echo $?
+
 service mysql start;
 
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"

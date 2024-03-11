@@ -1,6 +1,9 @@
 FROM debian:11
 
 RUN apt-get update && apt-get upgrade
+
+COPY ./nginx.conf /etx/nginx/nginx.conf
+
 RUN apt-get install nginx -y
 RUN apt-get install openssl
 

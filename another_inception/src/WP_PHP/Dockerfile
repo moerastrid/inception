@@ -1,6 +1,9 @@
 FROM debian:11
 
 RUN apt-get update && apt-get upgrade
+
+COPY ./wp-config.php /data/webfiles/wp-config.php
+
 RUN apt-get install wget -y
 RUN apt-get install php-fpm -y
 RUN apt-get install php-mysql -y

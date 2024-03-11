@@ -31,7 +31,7 @@ down :
 
 clean :
 	docker-compose -f $(SRC) -p $(NAME) down --remove-orphans --volumes --rmi all
-	docker volume prune -fDDOMAIN_NAME
+	docker volume prune -f DOMAIN_NAME
 	docker container prune -f
 	docker image prune -f
 # rmdir -pv $(DATA_DIR)/database

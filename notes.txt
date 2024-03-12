@@ -32,6 +32,8 @@ linkjes
 		volumes
 			https://phoenixnap.com/kb/nfs-docker-volumes
 			https://kinsta.com/blog/docker-compose-volumes/
+		more docker
+			https://projectatomic.io/docs/docker-image-author-guidance/
 
 	MARIADB
 		alpine linux + mariadb

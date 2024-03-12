@@ -5,8 +5,8 @@ RUN apt-get update && apt-get upgrade
 COPY ./wp-config.php /data/webfiles/wp-config.php
 
 RUN apt-get install wget -y
-RUN apt-get install php-fpm -y
-RUN apt-get install php-mysql -y
+RUN apt-get install php8.3-fpm -y
+RUN apt-get install php8.3-mysql -y
 RUN apt-get install mariadb-client -y
 
 RUN wget https://wordpress.org/wordpress-6.4.3.tar.gz -P /data/webfiles

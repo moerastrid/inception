@@ -58,8 +58,9 @@ services:
     container_name: wpphp
     env_file: .env
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+      # db:
+        # condition: service_healthy
     build: ./WP_PHP
     volumes:
       - webfiles:/data/webfiles/

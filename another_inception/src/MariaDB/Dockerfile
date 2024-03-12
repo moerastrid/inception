@@ -6,7 +6,7 @@ RUN		apt-get update -y && \
 		mariadb-server \
 		mariadb-client
 
-COPY	./tools/script.sh /tmp/mariadb_setup.sh
+COPY	./script.sh /tmp/mariadb_setup.sh
 COPY	./mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 ENTRYPOINT ["sh", "/tmp/mariadb_setup.sh"]

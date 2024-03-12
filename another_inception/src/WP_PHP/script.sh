@@ -1,5 +1,8 @@
 #!/bin/sh
 
+
+echo TEST
+
 wp core download
 
 # wp config create --allow-root\

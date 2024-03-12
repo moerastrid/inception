@@ -1,5 +1,7 @@
 FROM debian:11
 
+LABEL maintainer="ageels <ageels@student.codam.nl>"
+
 RUN apt-get update && apt-get upgrade
 
 COPY ./nginx.conf /etx/nginx/nginx.conf

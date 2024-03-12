@@ -23,23 +23,36 @@ volumes:
 
 services:
   db:
-    container_name: db
-    env_file: .env
-    build: ./MariaDB/
-    volumes: 
-      - database:/data/database
-    # configs:
-    #   - source: mariadb_config
-    #     target: etc/my.cnf
+    build: ./MariaDB
+    image: mariadb
+    restart: always
+    expose:
+      - "3306"
+    volumes:
+      - database:/var/lib/mysql
+    env_file:
+      - .env
     networks:
       - inception
-    restart: on-failure
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h" ,"localhost"]
-      interval: 5s
-      timeout: 1s
-      retries: 5
-      start_period: 30s
+    tty : true
+
+    # container_name: db
+    # env_file: .env
+    # build: ./MariaDB/
+    # volumes: 
+    #   - database:/data/database
+    # # configs:
+    # #   - source: mariadb_config
+    # #     target: etc/my.cnf
+    # networks:
+    #   - inception
+    # restart: on-failure
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h" ,"localhost"]
+    #   interval: 5s
+    #   timeout: 1s
+    #   retries: 5
+    #   start_period: 30s
 
   wpphp:
     container_name: wpphp

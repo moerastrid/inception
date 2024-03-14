@@ -1,0 +1,57 @@
+version: "3.0"
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ageels/data/database
+      o: bind
+  webfiles:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ageels/data/webfiles
+      o: bind
+
+services:
+  mariadb:
+    build: ./mariadb
+    restart: always
+    expose:
+      - "3306"
+    volumes:
+      - database:/var/lib/mysql
+    env_file: .env
+    networks:
+      - inception
+    tty : true
+
+  wordpress:
+    env_file: .env
+    depends_on:
+      - mariadb
+    build: ./wordpress
+    volumes:
+      - webfiles:/var/www/html/wordpress
+    networks:
+      - inception
+    restart: always
+
+  nginx:
+    env_file: .env
+    depends_on:
+      - wordpress
+    build: ./nginx
+    volumes:
+      - webfiles:/var/www/html/wordpress
+    ports:
+      - "433:433"
+    networks:
+      - inception
+    restart: always
+    tty : true

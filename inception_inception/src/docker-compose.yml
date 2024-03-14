@@ -9,17 +9,18 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ageels/data/database
+      device: /home/ageels/data/mariadb
       o: bind
   webfiles:
     driver: local
     driver_opts:
       type: none
-      device: /home/ageels/data/webfiles
+      device: /home/ageels/data/wordpress
       o: bind
 
 services:
   mariadb:
+    init: true
     build: ./mariadb
     restart: always
     expose:
@@ -50,7 +51,7 @@ services:
     volumes:
       - webfiles:/var/www/html/wordpress
     ports:
-      - "433:433"
+      - "443:443"
     networks:
       - inception
     restart: always

@@ -6,13 +6,13 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/14 16:06:30 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/14 17:26:18 by ageels        ########   odam.nl          #
+#    Updated: 2024/03/14 17:54:08 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = inception
 DOCK_SRC = ./src/docker-compose.yml
-DATA_DIR = ~/data
+DATA_DIR = home/ageels/data
 HOST_LINK := "127.0.0.1	ageels.42.fr" > /etc/hosts
 
 
@@ -24,6 +24,7 @@ obj_folder:
 	mkdir -pv $(DATA_DIR)/webfiles
 
 $(NAME) : obj_folder up
+	@sudo echo $(HOST_LINK)
 
 up :
 	docker-compose -f $(DOCK_SRC) up --build

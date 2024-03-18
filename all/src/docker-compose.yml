@@ -23,7 +23,8 @@ services:
   mariadb:
     build: ./mariadb
     init: true
-    env_file: .env
+    env_file: 
+      - .env
     volumes: 
       - mariadb:/var/lib/mysql
     networks: 
@@ -35,7 +36,8 @@ services:
       - mariadb
     build: ./wordpress
     init: true
-    env_file: .env
+    env_file: 
+      - .env
     volumes: 
       - wordpress:/var/www/html/wordpress
     networks: 
@@ -47,7 +49,8 @@ services:
       - wordpress
     build: ./nginx
     init: true
-    env_file: .env
+    env_file: 
+      - .env
     volumes: 
       - wordpress:/var/www/html/wordpress
     ports:

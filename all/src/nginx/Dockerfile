@@ -5,24 +5,26 @@
 #                                                      +:+                     #
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/03/14 16:25:11 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/14 17:03:11 by ageels        ########   odam.nl          #
+#    Created: 2024/03/18 16:47:05 by ageels        #+#    #+#                  #
+#    Updated: 2024/03/18 16:47:16 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:buster
+FROM debian:11
 
-LABEL	maintainer="ageels <ageels@student.codam.nl>"
+LABEL maintainer="ageels <ageels@student.codam.nl>"
 
-RUN		apt-get update -y && \
-		apt-get upgrade -y && \
-		apt-get -y install \
-		mariadb-server \
-		mariadb-client
+RUN apt-get update && apt-get upgrade
 
-COPY	./setup.sh /tmp/mariadb_setup.sh
-COPY	./50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./nginx.conf /etx/nginx/nginx.conf
 
-ENTRYPOINT ["sh", "/tmp/mariadb_setup.sh"]
+RUN apt-get install nginx -y
+RUN apt-get install openssl
 
-EXPOSE 3306
+RUN mkdir -p /etc/nginx/ssl
+
+RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -subj /C=NL/CN=ageels.42.fr/OU=codam -newkey rsa:2048 -keyout /etc/nginx/ssl/inception.key
+
+EXPOSE 443
+
+CMD ["nginx", "-g", "daemon off;"]

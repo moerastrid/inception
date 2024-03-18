@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/03/14 16:54:50 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/14 17:03:19 by ageels        ########   odam.nl          #
+#    Created: 2024/03/14 16:24:55 by ageels        #+#    #+#                  #
+#    Updated: 2024/03/18 17:13:04 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,19 +17,23 @@ LABEL	maintainer="ageels <ageels@student.codam.nl>"
 RUN		apt-get update -y && \
 		apt-get upgrade -y && \
 		apt-get -y install \
-		nginx \
-		openssl \
-		vim
+		mariadb-client \
+		wget \
+		curl \
+		tar \
+		php7.3-fpm \
+		php-cli \
+		php-mysql \
+		vim \
+		sudo
 
-RUN		mkdir /etc/nginx/ssl
+COPY	./script.sh /tmp/wordpress_setup.sh
+COPY	./www.conf /etc/php/7.3/fpm/pool.d/www.conf
+RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
-RUN		openssl req -newkey rsa:4096 -days 365 -nodes -x509 \
-		-subj "/C=NL/ST=Amsterdam/L=NL/O=CODAM/OU=Cetus/CN=localhost" \
-		-out /etc/nginx/ssl/ageels.42.fr.crt \
-		-keyout /etc/nginx/ssl/ageels.42.fr.key
+WORKDIR	/var/www/html/wordpress
+RUN		mkdir -p /run/php
 
-COPY	./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE	9000
 
-EXPOSE	443
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["sh", "/tmp/wordpress_setup.sh"]

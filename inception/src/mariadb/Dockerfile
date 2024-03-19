@@ -6,15 +6,13 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/14 16:25:11 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/19 17:35:00 by astrid        ########   odam.nl          #
+#    Updated: 2024/03/19 17:38:26 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:11
+FROM	debian:buster
 
 LABEL	maintainer="ageels <ageels@student.codam.nl>"
-
-
 
 RUN		apt-get update -y && \
 		apt-get upgrade -y && \

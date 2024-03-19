@@ -6,11 +6,11 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/14 16:54:50 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/19 12:28:57 by astrid        ########   odam.nl          #
+#    Updated: 2024/03/19 12:58:52 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:buster
+FROM	debian:11
 
 LABEL	maintainer="ageels <ageels@student.codam.nl>"
 

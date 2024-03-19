@@ -5,26 +5,31 @@
 #                                                      +:+                     #
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/03/18 16:47:05 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/18 16:47:16 by ageels        ########   odam.nl          #
+#    Created: 2024/03/14 16:54:50 by ageels        #+#    #+#                  #
+#    Updated: 2024/03/19 12:28:57 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:11
+FROM	debian:buster
 
-LABEL maintainer="ageels <ageels@student.codam.nl>"
+LABEL	maintainer="ageels <ageels@student.codam.nl>"
 
-RUN apt-get update && apt-get upgrade
+RUN		apt-get update -y && \
+		apt-get upgrade -y && \
+		apt-get -y install \
+		nginx \
+		openssl \
+		vim
 
-COPY ./nginx.conf /etx/nginx/nginx.conf
+RUN		mkdir /etc/nginx/ssl
 
-RUN apt-get install nginx -y
-RUN apt-get install openssl
+RUN		openssl req -newkey rsa:4096 -days 365 -nodes -x509 \
+		-subj "/C=NL/ST=Amsterdam/L=NL/O=CODAM/OU=Cetus/CN=localhost" \
+		-out /etc/nginx/ssl/ageels.42.fr.crt \
+		-keyout /etc/nginx/ssl/ageels.42.fr.key
 
-RUN mkdir -p /etc/nginx/ssl
+COPY	./nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -subj /C=NL/CN=ageels.42.fr/OU=codam -newkey rsa:2048 -keyout /etc/nginx/ssl/inception.key
+EXPOSE	443
 
-EXPOSE 443
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

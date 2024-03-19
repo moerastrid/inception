@@ -3,28 +3,29 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: ageels <ageels@student.codam.nl>             +#+                      #
+#    By: astrid <astrid@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/02/28 11:58:00 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/18 17:06:58 by ageels        ########   odam.nl          #
+#    Created: 2024/03/19 12:05:57 by astrid        #+#    #+#                  #
+#    Updated: 2024/03/19 12:30:21 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= inception
-SRC			= ./src/docker-compose.yml
-DATA_DIR	= $(HOME)/data
-HOST_LINK	= "127.0.0.1	ageels.42.fr" > /etc/hosts
+NAME = inception
+SRC = ./src/docker-compose.yml
+DATA_DIR = $(HOME)/data
+CMD = echo "127.0.0.1	ageels.42.fr" > /etc/hosts
 
 all : $(NAME)
 
-$(NAME) : obj_folder up
+up : $(NAME)
 
-obj_folder:
+obj_folder :
 	mkdir -pv $(DATA_DIR)
 	mkdir -pv $(DATA_DIR)/mariadb
 	mkdir -pv $(DATA_DIR)/wordpress
 
-up : obj_folder
+$(NAME) : obj_folder
+#	sudo $(CMD)
 	docker-compose -f $(SRC) -p $(NAME) up --build
 
 down :
@@ -32,8 +33,8 @@ down :
 
 clean :
 	docker-compose -f $(SRC) -p $(NAME) down --remove-orphans --volumes --rmi all
-	
-fclean: clean
+
+fclean : clean
 	docker volume prune -f
 	docker container prune -f
 	docker image prune -f
@@ -41,4 +42,4 @@ fclean: clean
 
 re : fclean all
 
-.PHONY : all up down clean
+.PHONY : all up obj_folder down clean fclean re

@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/03/18 16:11:29 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/18 16:54:30 by ageels        ########   odam.nl          #
+#    Created: 2024/03/14 16:24:55 by ageels        #+#    #+#                  #
+#    Updated: 2024/03/19 12:28:31 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,23 @@ LABEL	maintainer="ageels <ageels@student.codam.nl>"
 RUN		apt-get update -y && \
 		apt-get upgrade -y && \
 		apt-get -y install \
-		mariadb-server \
-		mariadb-client
+		mariadb-client \
+		wget \
+		curl \
+		tar \
+		php7.3-fpm \
+		php-cli \
+		php-mysql \
+		vim \
+		sudo
 
-COPY	./script.sh /tmp/script.sh
-COPY	./50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY	./setup.sh /tmp/wordpress_setup.sh
+COPY	./www.conf /etc/php/7.3/fpm/pool.d/www.conf
+RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
-EXPOSE 3306
+WORKDIR	/var/www/html/wordpress
+RUN		mkdir -p /run/php
 
-ENTRYPOINT ["bash", "/tmp/script.sh"]
+EXPOSE	9000
+
+ENTRYPOINT ["sh", "/tmp/wordpress_setup.sh"]

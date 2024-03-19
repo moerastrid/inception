@@ -58,4 +58,4 @@ services:
     networks:
       - inception
     restart: always
-    # tty : true
+    tty : true

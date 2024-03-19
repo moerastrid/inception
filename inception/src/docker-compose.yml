@@ -19,9 +19,9 @@ volumes:
       o: bind
 
 services:
-  mariadb:
-    init: true
+  db_service:
     build: ./mariadb
+    init: true
     restart: always
     expose:
       - "3306"
@@ -32,28 +32,30 @@ services:
       - inception
     tty : true
 
-  wordpress:
+  wp_service:
+    build: ./wordpress
     init: true
     env_file: .env
     depends_on:
-      - mariadb
-    build: ./wordpress
+      - db_service
     volumes:
-      - webfiles:/var/www/html/wordpress
+      - webfiles:/var/www/wordpress
     networks:
       - inception
     restart: always
 
-  nginx:
+  nginx_service:
+    build: ./nginx
+    init: true
     env_file: .env
     depends_on:
-      - wordpress
-    build: ./nginx
+      - db_service
+      - wp_service
     volumes:
-      - webfiles:/var/www/html/wordpress
+      - webfiles:/var/www/wordpress
     ports:
       - "443:443"
     networks:
       - inception
     restart: always
-    tty : true
+    # tty : true

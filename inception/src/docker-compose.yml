@@ -23,8 +23,6 @@ services:
     build: ./mariadb
     init: true
     restart: always
-    expose:
-      - "3306"
     volumes:
       - database:/var/lib/mysql
     env_file: .env

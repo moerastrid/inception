@@ -6,23 +6,20 @@
 #    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/14 16:25:11 by ageels        #+#    #+#                  #
-#    Updated: 2024/03/19 20:08:58 by astrid        ########   odam.nl          #
+#    Updated: 2024/03/19 21:21:58 by astrid        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	debian:buster
-
+FROM	debian:11
 LABEL	maintainer="ageels <ageels@student.codam.nl>"
 
-RUN		apt-get update -y && \
-		apt-get upgrade -y && \
-		apt-get -y install \
-		mariadb-server \
-		mariadb-client
+RUN		apt-get update && apt-get upgrade
+RUN		apt-get install mariadb-server -y
 
-COPY	./setup.sh /tmp/mariadb_setup.sh
-COPY	./50-server.cnf /etc/mysql/mariadb.conf.d/
-
-ENTRYPOINT ["sh", "/tmp/mariadb_setup.sh"]
+COPY	./mariadb.conf /etc/mysql/mariadb.cnf
+COPY	./setup.sh /tmp/setup.sh
+RUN		chmod +x /tmp/setup.sh
 
 EXPOSE 3306
+
+CMD ["bash", "./tmp/setup.sh" ]

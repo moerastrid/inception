@@ -9,7 +9,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ageels/mariadb
+      device: /home/ageels/data/mariadb
       o: bind
   webfiles:
     driver: local

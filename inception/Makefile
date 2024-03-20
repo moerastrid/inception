@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: astrid <astrid@student.codam.nl>             +#+                      #
+#    By: ageels <ageels@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2024/03/19 12:05:57 by astrid        #+#    #+#                  #
-#    Updated: 2024/03/19 12:30:21 by astrid        ########   odam.nl          #
+#    Created: 2024/03/19 12:05:57 by ageels        #+#    #+#                  #
+#    Updated: 2024/03/20 16:16:04 by ageels        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ obj_folder :
 	mkdir -pv $(DATA_DIR)/wordpress
 
 $(NAME) : obj_folder
-#	sudo $(CMD)
+	sudo $(CMD)
 	docker-compose -f $(SRC) -p $(NAME) up --build
 
 down :

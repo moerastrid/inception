@@ -9,13 +9,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/astrid/data/mariadb
+      device: /home/ageels/mariadb
       o: bind
   webfiles:
     driver: local
     driver_opts:
       type: none
-      device: /Users/astrid/data/wordpress
+      device: /home/ageels/data/wordpress
       o: bind
 
 services:
